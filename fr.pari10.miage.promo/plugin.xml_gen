@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.emf.ecore.generated_package">
+		<package 
+			uri = "http://www.pari10.fr/miage/promo/PromoDSL"
+			class = "fr.pari10.miage.promo.promoDSL.PromoDSLPackage"
+			genModel = "model/generated/PromoDSL.genmodel" />
+	</extension>
+</plugin>

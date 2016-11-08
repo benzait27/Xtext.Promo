@@ -1,0 +1,53 @@
+grammar fr.pari10.miage.promo.PromoDSL with org.eclipse.xtext.common.Terminals
+
+generate promoDSL "http://www.pari10.fr/miage/promo/PromoDSL"
+
+Modele:
+	(livre+=Livre)*
+	
+;
+
+Livre:
+    'Livre' nomDuLivre=STRING 'par' nomDuLauteur=STRING 
+	
+	(chapitre+=Chapitre)+
+
+    '/Livre'
+;
+
+
+
+Chapitre:
+	 'Chapitre' numDuChapitre=STRING 
+	  (recette+=Recette)+
+	 '/Chapitre'
+;
+
+Recette:
+    'Recette' name=STRING
+    'photo'   NumPhoto=STRING
+     'ingredients'
+    (ingredients+=Ingredient ) (';'ingredients+= Ingredient)*
+     'instruction'
+   (instructions+=Instruction ) (';'instructions+= Instruction)*
+  ( 'alternatives' alternatives+=Alternatives (';' alternatives+=Alternatives)*)?
+   '/Recette'
+;
+
+Alternatives:
+	 altNum=STRING
+;
+
+Ingredient:
+	NomDuIng=STRING num=INT unite=STRING 
+;
+
+Instruction:
+	numDuInstruction=STRING
+;
+
+
+
+
+
+
