@@ -31,11 +31,13 @@ public static val Warning_Recette = "Nom du recette ne doit pas être redondant"
     @Check(NORMAL)
 def verifierRectte(Livre livre){
 	
-	val compnots = livre.eAllContents
-	.filter(typeof(Recette))
-	.map[name]
-	.toList
-	if (compnots.stream.distinct.count!=compnots.size) {
+	val compnots = livre.eAllContents // recuper tout les contenat de livre (chapitre, recette ...)
+	.filter(typeof(Recette)) // prendre que les recette
+	.map[name] // prendre que le nom des recette
+	.toList // transformer en liste
+	if (compnots.stream.distinct.count!=compnots.size) 
+	  // compnots.stream.distinct = une liste qui contien tout les contenu de compnots sans avoir de redandant
+	 {
 		error("Nom du recette ne doit pas être redondant",PromoDSLPackage.Literals.LIVRE__NOM_DU_LAUTEUR,Warning_Recette)
 		
 	}
@@ -45,21 +47,29 @@ public static val Warning_Sucre = "Le Sucre doit être inferieur à 25"
     @Check(NORMAL)
 def verifierSucre(Livre livre){
 	
+	// on recuper tout les recettes du livre
 	val Recett = livre.eAllContents
 	.filter(typeof(Recette))
 	.toList
+	// pour parcourir tout les recettes 
   for(Recette re: Recett ){
 	     
-	 	var nbS = 0;
+	    // le poids du sucre
+	 	var PoidS = 0;
 	 	
+	 // pour chaque recette on recuper tout les ingredients et les met dans ing
        val ing = re.ingredients;
  
+    // pour chaque ingredient on recuper tout les nom et poids
          for(Ingredient r:ing ){
+         	// verifier que le nom de l'ingredient est sucre 
             if (r.nomDuIng.equals("sucre")){
-            	nbS = nbS+r.num;           
+            	// somme tout les poids de sucre
+            	PoidS = PoidS+r.num;           
          }    	
          }
-         if (nbS>25)
+         // affiche l'erreur dés qu'on trouve un cas
+         if (PoidS>25)
           error('Le Sucre doit être inferieur à 25', 
 					PromoDSLPackage.Literals.LIVRE__NOM_DU_LAUTEUR,
 					Warning_Sucre)
